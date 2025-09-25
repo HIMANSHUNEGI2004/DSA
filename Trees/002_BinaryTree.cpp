@@ -125,6 +125,41 @@ int Diameter(BinaryTree<int>* root){
 
     return max(option1,max(option2,option3));
 }
+
+bool Balanced(BinaryTree<int>* root)
+{
+    if(root==NULL) return true;
+    int leftheight=heightBFS(root->left);
+    int rightheight=heightBFS(root->right);
+
+    if(max(leftheight,rightheight)-min(leftheight,rightheight) > 1) return false;
+
+    return Balanced(root->left) && Balanced(root->right);
+
+}
+
+void LevelorderinNewLine(BinaryTree<int>* root) {
+    if (root == NULL) return;
+
+    queue<BinaryTree<int>*> qu;
+    qu.push(root);
+
+    while (!qu.empty()) {
+        int k = qu.size();   // number of nodes in current level
+
+        for (int i = 0; i < k; i++) {
+            BinaryTree<int>* front = qu.front();
+            qu.pop();
+
+            cout << front->data << " ";
+
+            if (front->left != NULL)  qu.push(front->left);
+            if (front->right != NULL) qu.push(front->right);
+        }
+        cout << endl;  // new line after finishing current level
+    }
+}
+
 int main(){
     BinaryTree<int>* root=LevelWiseInput();  // 1 2 3 -1 -1 4 5 6 7 -1 -1 -1 -1 -1 -1 
     cout<<"Level_Wise_Display : ";
@@ -142,6 +177,11 @@ int main(){
     cout<<"Height Of Tree Using DFS : "<<heightDFS(root)<<endl;
     cout<<"Height Of Tree Using DFS : "<<heightBFS(root)<<endl;
     cout<<"Diameter of BT : "<< Diameter(root)<<endl;
+    cout<<"Balanced BT : "<< Balanced(root)<<endl;
+    cout<<"Levelorderin New_Line BT : ";
+    LevelorderinNewLine(root);
+    cout<<endl;
+    
     
 
 
